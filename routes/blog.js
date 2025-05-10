@@ -1,5 +1,5 @@
 const express = require('express');
-const { handleAddBlog } = require('../controllers/blog');
+const { handleAddBlog, handleBlogView, handleAddComment } = require('../controllers/blog');
 const multer  = require('multer')
 const path = require('path');
 
@@ -24,7 +24,12 @@ router.get('/add-new', (req,res) => {
 })
 
 
-router.post('/', upload.single('coverImage'), handleAddBlog)
+router.post('/', upload.single('coverImage'), handleAddBlog);
+
+router.get('/:id', handleBlogView);
+
+router.post('/comment/:blogId', handleAddComment);
+
 module.exports = router;
 
 

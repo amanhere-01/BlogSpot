@@ -25,7 +25,7 @@ app.set('views', path.resolve('./views'));
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(checkForAuthentication);
-app.use(express.static(path.resolve("./public/uploads")));
+app.use(express.static(path.resolve(__dirname, 'public'))); //this is to access static data in express
 
 
 app.get('/', async (req,res) => {
