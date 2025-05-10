@@ -3,8 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cookieParser = require('cookie-parser')
-const userRouter = require('./routes/user');
+const userRoute = require('./routes/user');
+const blogRoute = require('./routes/blog');
 const { checkForAuthentication } = require('./middlewares/auth');
+const Blog = require('./models/blog');
 
 
 
@@ -23,14 +25,19 @@ app.set('views', path.resolve('./views'));
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(checkForAuthentication);
+app.use(express.static(path.resolve("./public/uploads")));
 
 
-app.get('/', (req,res) => {
+app.get('/', async (req,res) => {
+  const allBlogs = await Blog.find({}).sort({ createdAt: -1 });
   res.render('homepage', {
     user: req.user,
+    blogs: allBlogs
   });
 })
 
-app.use('/user', userRouter);
+app.use('/user', userRoute);
+app.use('/blog', blogRoute);
+
 
 app.listen(PORT, () => console.log(`Server started at ${PORT}`));
