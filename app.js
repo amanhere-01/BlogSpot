@@ -11,7 +11,7 @@ const Blog = require('./models/blog');
 
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 mongoose.connect(process.env.MONGODB_URL)
   .then(console.log('Database connected!'))
