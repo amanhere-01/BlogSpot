@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Edit Blog</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-3">
+      <form action="/blog/edit/<%= blog._id %>" method="post" enctype="multipart/form-data">
+        <% if (blog.coverImageUrl) { %>
+          <div class="mb-3">
+            <img src="/uploads/<%= blog.coverImageUrl %>" width="200" class="img-thumbnail" />
+          </div>
+        <% } %>
+
+        <div class="mb-3">
+          <label for="coverImage" class="form-label fw-bold">Change Cover Image</label>
+          <input
+            type="file"
+            class="form-control"
+            name="coverImage"
+            id="coverImage"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="title" class="form-label fw-bold">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            id="title"
+            value="<%= blog.title %>"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="body" class="form-label fw-bold">Body</label>
+          <textarea name="body" class="form-control" id="body" rows="10"><%= blog.body %></textarea>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-dark px-4">
+            <i class="bi bi-check-circle me-1"></i> Update
+          </button>
+        </div>
+      </form>
+    </div>
+    <%- include('./partials/script') %>
+  </body>
+</html>
